@@ -8,14 +8,13 @@ import java.util.List;
  */
 public interface IConstitution {
     /**
-     * Returns contents of multiple articles with specified numbers.
-     * @param articleNumbers List of article numbers.
+     * Returns list with all chapters.
      */
-    String getArticles(List<Integer> articleNumbers);
+    List<IChapter> getChapters();
 
     /**
      * Returns single chapter containing articles.
      * @param number Number of chapter.
      */
-    String getChapter(Integer number);
+    IChapter getChapter(Integer number);
 }

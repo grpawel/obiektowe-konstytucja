@@ -1,6 +1,6 @@
 package agh.cs.lab.constitution;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Paweł Grochola on 02.12.2016.
@@ -17,14 +17,29 @@ public interface IChapter {
     String getContents();
 
     /**
+     * Returns title of chapter.
+     */
+    String getTitle();
+
+    /**
      * Returns list with all contained articles.
      */
-    List<IArticle> getArticles();
+    Collection<IArticle> getArticles();
 
     /**
      * Returns single article by its number.
      * @param articleNo Number of article within chapter to be returned.
      */
     IArticle getArticle(Integer articleNo);
+
+    /**
+     Returns minimum article number contained within chapter.
+     */
+    Integer getMinArticleNo();
+
+    /**
+     * Returns maximum article number contained within chapter.
+     */
+    Integer getMaxArticleNo();
 
 }

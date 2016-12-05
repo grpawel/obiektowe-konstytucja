@@ -1,4 +1,4 @@
-package agh.cs.lab.constitution;
+package agh.cs.lab.constitution.textProcessors;
 
 /**
  * Created by Paweł Grochola on 02.12.2016.

@@ -1,5 +1,7 @@
 package agh.cs.lab.constitution;
 
+import agh.cs.lab.constitution.textProcessors.ITextProcessor;
+
 /**
  * Created by Paweł Grochola on 02.12.2016.
  */

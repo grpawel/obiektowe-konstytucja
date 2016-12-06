@@ -12,14 +12,19 @@ public interface IChapter {
     Integer getChapterNo();
 
     /**
-     * Returns contents of chapter. Includes all articles.
+     * Returns heading of chapter, eg. "Rozdział II"
      */
-    String getContents();
+    String getHeading();
 
     /**
      * Returns title of chapter.
      */
     String getTitle();
+
+    /**
+     * Returns contents of chapter. Includes all articles.
+     */
+    String getContents();
 
     /**
      * Returns list with all contained articles.
@@ -28,12 +33,13 @@ public interface IChapter {
 
     /**
      * Returns single article by its number.
+     *
      * @param articleNo Number of article within chapter to be returned.
      */
     IArticle getArticle(Integer articleNo);
 
     /**
-     Returns minimum article number contained within chapter.
+     * Returns minimum article number contained within chapter.
      */
     Integer getMinArticleNo();
 

@@ -6,8 +6,8 @@ package agh.cs.lab.constitution;
 public interface IConstitutionSplitter {
     /**
      * Splits string with constitution into structure of chapters and articles.
-     * @param constitution String with whole constitution to split.
+     * @param constitutionText String with whole constitution to split.
      * @return Structure with chapters and articles.
      */
-    IConstitution split(String constitution);
+    IConstitution split(String constitutionText);
 }

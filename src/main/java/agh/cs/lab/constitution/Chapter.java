@@ -10,19 +10,20 @@ import java.util.stream.Collectors;
  * Created by Paweł Grochola on 04.12.2016.
  */
 public class Chapter
-    implements IChapter
-{
+        implements IChapter {
     private final Integer chapterNo;
-    private final String contents;
+    private final String heading;
     private final String title;
+    private final String contents;
     private final Map<Integer, IArticle> articles;
     private final Integer minArticleNo;
     private final Integer maxArticleNo;
 
-    public Chapter(Integer chapterNo, String contents, String title, List<IArticle> articleList) {
+    public Chapter(Integer chapterNo, String heading, String title, String contents, List<IArticle> articleList) {
         this.chapterNo = chapterNo;
-        this.contents = contents;
+        this.heading = heading;
         this.title = title;
+        this.contents = contents;
         this.articles = articleList.stream().collect(Collectors.toMap(IArticle::getArticleNo, i -> i));
         this.minArticleNo = Collections.min(this.articles.keySet());
         this.maxArticleNo = Collections.max(this.articles.keySet());
@@ -34,13 +35,18 @@ public class Chapter
     }
 
     @Override
-    public String getContents() {
-        return contents;
+    public String getHeading() {
+        return this.heading;
     }
 
     @Override
     public String getTitle() {
         return this.title;
+    }
+
+    @Override
+    public String getContents() {
+        return contents;
     }
 
     @Override

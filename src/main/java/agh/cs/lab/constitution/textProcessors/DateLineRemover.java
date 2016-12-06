@@ -7,14 +7,15 @@ import java.util.regex.Pattern;
  */
 public class DateLineRemover
         implements ITextProcessor {
-    private static final Pattern dateLine = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\R",
-            Pattern.CASE_INSENSITIVE);
+    private static final Pattern dateLine = Pattern.compile("\\d{4}-\\d{2}-\\d{2}\\s*\\R");
+    private static final Pattern dateLineEndOfString = Pattern.compile("\\R\\d{4}-\\d{2}-\\d{2}\\s*$");
 
     @Override
     public String process(String inputString) {
         String result;
         // remove lines containing date in format rrrr-mm-dd
         result = dateLine.matcher(inputString).replaceAll("");
+        result = dateLineEndOfString.matcher(result).replaceAll("");
 
         return result;
     }

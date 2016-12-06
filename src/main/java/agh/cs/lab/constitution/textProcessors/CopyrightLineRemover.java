@@ -7,14 +7,15 @@ import java.util.regex.Pattern;
  */
 public class CopyrightLineRemover
         implements ITextProcessor {
-    private static final Pattern copyrightCharLine = Pattern.compile("©.*\\R",
-            Pattern.CASE_INSENSITIVE);
+    private static final Pattern copyrightSignLine = Pattern.compile("©.*\\R");
+    private static final Pattern copyrightSignLineAtTheEnd = Pattern.compile("\\R©.*$");
 
     @Override
     public String process(String inputString) {
         String result;
         // remove lines starting with '©'
-        result = copyrightCharLine.matcher(inputString).replaceAll("");
+        result = copyrightSignLine.matcher(inputString).replaceAll("");
+        result = copyrightSignLineAtTheEnd.matcher(result).replaceAll("");
 
         return result;
     }

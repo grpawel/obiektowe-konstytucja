@@ -49,6 +49,7 @@ public class ConstitutionProcessor
                 IArticleSplitter articleSplitter = splitterFactory.getArticleSplitter(articleText);
                 articleSplitter.split();
                 String articleContent = articleSplitter.getArticleContent();
+                articleContent = applyProcessorsAfterSplit(articleContent);
                 Integer articleNumber = articleSplitter.getArticleNumber();
                 IArticle article = new Article(articleContent, articleNumber);
                 articles.add(article);

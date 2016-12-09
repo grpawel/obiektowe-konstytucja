@@ -43,6 +43,16 @@ public class Chapter
     }
 
     @Override
+    public String getContents() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (IArticle article : articles.values()) {
+            stringBuilder.append(article);
+            stringBuilder.append(System.lineSeparator());
+        }
+        return stringBuilder.toString();
+    }
+
+    @Override
     public Collection<IArticle> getArticles() {
         return articles.values();
     }

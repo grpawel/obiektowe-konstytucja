@@ -28,7 +28,6 @@ public class CopyrightLineRemoverTest {
         String actualOutput = copyrightLineRemover.process(inputText);
 
         assertEquals(expectedOutput, actualOutput);
-
     }
 
     @Test
@@ -43,7 +42,6 @@ public class CopyrightLineRemoverTest {
         String actualOutput = copyrightLineRemover.process(inputText);
 
         assertEquals(expectedOutput, actualOutput);
-
     }
 
     @Test
@@ -59,7 +57,6 @@ public class CopyrightLineRemoverTest {
         String actualOutput = copyrightLineRemover.process(inputText);
 
         assertEquals(expectedOutput, actualOutput);
-
     }
 
     @Test
@@ -71,6 +68,5 @@ public class CopyrightLineRemoverTest {
         String actualOutput = copyrightLineRemover.process(inputText);
 
         assertEquals(expectedOutput, actualOutput);
-
     }
 }

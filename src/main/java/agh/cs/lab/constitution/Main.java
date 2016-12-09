@@ -4,10 +4,7 @@ import agh.cs.lab.constitution.constitutionProcessors.ConstitutionProcessor;
 import agh.cs.lab.constitution.constitutionProcessors.IConstitutionProcessor;
 import agh.cs.lab.constitution.constitutionProcessors.ISplitterFactory;
 import agh.cs.lab.constitution.constitutionProcessors.SplitterFactory;
-import agh.cs.lab.constitution.textProcessors.CopyrightLineRemover;
-import agh.cs.lab.constitution.textProcessors.DateLineRemover;
-import agh.cs.lab.constitution.textProcessors.ITextProcessor;
-import agh.cs.lab.constitution.textProcessors.LineJoiner;
+import agh.cs.lab.constitution.textProcessors.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -25,6 +22,8 @@ public class Main {
         try {
             String constitutionText = readFile("konstytucja.txt", StandardCharsets.UTF_8);
             List<ITextProcessor> textProcessors = new ArrayList<>();
+            textProcessors.add(new EverythingBeforeFirstChapterRemover());
+            textProcessors.add(new CapitalizedLineRemover());
             textProcessors.add(new CopyrightLineRemover());
             textProcessors.add(new DateLineRemover());
             textProcessors.add(new LineJoiner());

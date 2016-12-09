@@ -21,7 +21,7 @@ public class RomanNumeralConverter {
         romanDigits = Collections.unmodifiableMap(digits);
     }
 
-    Integer convertToDecimal(String romanNumber) {
+    public Integer convertToDecimal(String romanNumber) {
         Integer previousValue = 0;
         Integer totalValue = 0;
         for (int i = romanNumber.length() - 1; i >= 0 ; i--) {

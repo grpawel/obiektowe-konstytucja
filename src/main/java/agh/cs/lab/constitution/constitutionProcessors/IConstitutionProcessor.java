@@ -1,5 +1,6 @@
-package agh.cs.lab.constitution;
+package agh.cs.lab.constitution.constitutionProcessors;
 
+import agh.cs.lab.constitution.IConstitution;
 import agh.cs.lab.constitution.textProcessors.ITextProcessor;
 
 /**
@@ -14,13 +15,8 @@ public interface IConstitutionProcessor {
     void addTextProcessor(ITextProcessor textProcessor);
 
     /**
-     * Add text splitter for splitting single string into structure of chapters and articles.
-     * @param textSplitter Splits text into object structure.
-     */
-    void addTextSplitter(IConstitutionSplitter textSplitter);
-    /**
      * Applies all formerly added processors and returns processed text.
      * @return Processed constitution string.
      */
-    IConstitution processText();
+    IConstitution processText(String constitutionText);
 }

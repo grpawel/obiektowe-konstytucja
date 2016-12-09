@@ -1,4 +1,8 @@
-package agh.cs.lab.constitution;
+package agh.cs.lab.constitution.constitutionProcessors;
+
+import agh.cs.lab.constitution.IConstitution;
+
+import java.util.List;
 
 /**
  * Created by Paweł Grochola on 02.12.2016.
@@ -6,8 +10,9 @@ package agh.cs.lab.constitution;
 public interface IConstitutionSplitter {
     /**
      * Splits string with constitution into structure of chapters and articles.
-     * @param constitutionText String with whole constitution to split.
      * @return Structure with chapters and articles.
      */
-    IConstitution split(String constitutionText);
+    void split();
+
+    List<String> getChapterTexts();
 }

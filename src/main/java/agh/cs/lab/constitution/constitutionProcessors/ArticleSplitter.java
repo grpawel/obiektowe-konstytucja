@@ -56,7 +56,6 @@ public class ArticleSplitter
         if (matcher.find()) {
             return Integer.parseInt(matcher.group());
         }
-        System.out.println(articleText);
         return -1;
     }
 }

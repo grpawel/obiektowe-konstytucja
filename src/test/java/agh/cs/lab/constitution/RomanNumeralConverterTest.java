@@ -1,7 +1,9 @@
 package agh.cs.lab.constitution;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.omg.PortableInterceptor.Interceptor;
 
 import static org.junit.Assert.*;
@@ -11,6 +13,9 @@ import static org.junit.Assert.*;
  */
 public class RomanNumeralConverterTest {
     private RomanNumeralConverter converter;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() throws Exception {
@@ -66,11 +71,17 @@ public class RomanNumeralConverterTest {
     }
 
     @Test
-    public void convertToDecimal_IllegalCharacter_Ignored() throws Exception {
-        final Integer actualValue = converter.convertToDecimal("XXt");
-        final Integer expectedValue = 20;
+    public void convertToDecimal_IllegalCharacter_ExceptionThrown() throws Exception {
+        thrown.expect(NumberFormatException.class);
+        thrown.expectMessage("Invalid character 't' found when parsing roman numeral \"XXt\"");
+        converter.convertToDecimal("XXt");
+    }
 
-        assertEquals(expectedValue, actualValue);
+    @Test
+    public void convertToDecimal_NumbersWithLowerAndUpperCase_LetterCaseDoesntMatter() throws Exception {
+        final Integer lowerCaseValue = converter.convertToDecimal("mdclxvi");
+        final Integer upperCaseValue = converter.convertToDecimal("MDCLXVI");
+        assertEquals(upperCaseValue, lowerCaseValue);
     }
 
     @Test

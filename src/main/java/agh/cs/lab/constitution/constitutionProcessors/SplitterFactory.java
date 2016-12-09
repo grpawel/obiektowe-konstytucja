@@ -1,5 +1,7 @@
 package agh.cs.lab.constitution.constitutionProcessors;
 
+import agh.cs.lab.constitution.RomanNumeralConverter;
+
 /**
  * Created by Paweł Grochola on 09.12.2016.
  */
@@ -14,8 +16,9 @@ public class SplitterFactory
     public IArticleSplitter getArticleSplitter(String articleText) {
         return new ArticleSplitter(articleText);
     }
+
     @Override
     public IChapterSplitter getChapterSplitter(String chapterText) {
-        return new ChapterSplitter(chapterText);
+        return new ChapterSplitter(chapterText, new RomanNumeralConverter());
     }
 }

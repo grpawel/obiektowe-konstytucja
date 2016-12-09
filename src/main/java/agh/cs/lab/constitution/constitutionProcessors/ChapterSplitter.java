@@ -16,9 +16,11 @@ public class ChapterSplitter
     private String firstLine;
     private Integer chapterNumber;
     private List<String> articleTexts;
+    private final RomanNumeralConverter romanNumeralConverter;
 
-    public ChapterSplitter(String chapterText) {
+    public ChapterSplitter(String chapterText, RomanNumeralConverter numeralConverter) {
         this.chapterText = chapterText;
+        this.romanNumeralConverter = numeralConverter;
     }
 
     @Override
@@ -46,7 +48,6 @@ public class ChapterSplitter
     }
 
     private Integer extractChapterNumber(String chapterHeading) {
-        RomanNumeralConverter romanConverter = new RomanNumeralConverter();
         String romanNumber;
         try {
             romanNumber = chapterHeading.split(" ")[1];
@@ -54,12 +55,14 @@ public class ChapterSplitter
             romanNumber = "I";
         }
 
-        return romanConverter.convertToDecimal(romanNumber);
+        return romanNumeralConverter.convertToDecimal(romanNumber);
     }
 
     private Pair<String, String> extractFirstLine(String text) {
         String[] split = text.split("\\R", 2);
-        return new Pair<>(split[0], split[1]);
+        String firstLine = split.length >= 1 ? split[0] : "";
+        String restOfLines = split.length >= 2 ? split[1] : "";
+        return new Pair<>(firstLine, restOfLines);
     }
 
     private List<String> splitIntoArticles(String contents) {

@@ -23,4 +23,13 @@ public class Article
     public String getContents() {
         return this.contents;
     }
+
+    @Override
+    public String toString() {
+        return "Art. " +
+                articleNo +
+                '.' +
+                System.lineSeparator() +
+                contents;
+    }
 }

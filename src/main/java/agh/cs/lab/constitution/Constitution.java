@@ -4,7 +4,10 @@ import javafx.util.Pair;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.util.Optional.empty;
 
 /**
  * Created by Paweł Grochola on 05.12.2016.
@@ -12,13 +15,10 @@ import java.util.stream.Collectors;
 public class Constitution
         implements IConstitution {
     private final List<IChapter> chapters;
-    private final List<Pair<Integer, IChapter>> articleFirstNumbers;
 
     public Constitution(List<IChapter> chapters) {
         this.chapters = chapters;
-        articleFirstNumbers = chapters.stream()
-                .map(chapter -> new Pair<>(chapter.getMinArticleNo(), chapter))
-                .collect(Collectors.toList());
+        this.chapters.sort((o1, o2) -> o1.getMinArticleNo().compareTo(o2.getMinArticleNo()));
     }
 
     @Override
@@ -27,25 +27,40 @@ public class Constitution
     }
 
     @Override
-    public IChapter getChapter(Integer chapterNo) {
+    public Optional<IChapter> getChapter(Integer chapterNo) {
         return chapters.stream()
                 .filter(chapter -> chapter.getChapterNo().equals(chapterNo))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
     @Override
-    public IArticle getArticle(Integer articleNo) {
+    public Optional<IArticle> getArticle(Integer articleNo) {
         int chapterIndex = 0;
-        while (chapterIndex < articleFirstNumbers.size() - 1
-                && articleFirstNumbers.get(chapterIndex + 1).getKey() > articleNo) {
-            chapterIndex++;
+        boolean found = false;
+        IChapter currentChapter = null;
+        while (chapterIndex < chapters.size() && !found) {
+            currentChapter = chapters.get(chapterIndex);
+            if(currentChapter.getMinArticleNo() <= articleNo && articleNo <= currentChapter.getMaxArticleNo()) {
+                found = true;
+            }
+            else {
+                chapterIndex++;
+            }
         }
-        return articleFirstNumbers.get(chapterIndex).getValue().getArticle(articleNo);
+        if(found) {
+            return currentChapter.getArticle(articleNo);
+        }
+        else {
+            return Optional.empty();
+        }
     }
 
     @Override
     public List<IArticle> getArticles(List<Integer> articleNos) {
-        return articleNos.stream().map(this::getArticle).collect(Collectors.toList());
+        return articleNos.stream()
+                .map(this::getArticle)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 }

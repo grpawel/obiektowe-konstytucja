@@ -1,9 +1,6 @@
 package agh.cs.lab.constitution;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -15,6 +12,7 @@ public class Chapter
     private final String heading;
     private final String title;
     private final Map<Integer, IArticle> articles;
+    private final List<IArticle> articleList;
     private final Integer minArticleNo;
     private final Integer maxArticleNo;
 
@@ -23,6 +21,7 @@ public class Chapter
         this.heading = heading;
         this.title = title;
         this.articles = articleList.stream().collect(Collectors.toMap(IArticle::getArticleNo, i -> i));
+        this.articleList = articleList;
         this.minArticleNo = Collections.min(this.articles.keySet());
         this.maxArticleNo = Collections.max(this.articles.keySet());
     }
@@ -53,13 +52,13 @@ public class Chapter
     }
 
     @Override
-    public Collection<IArticle> getArticles() {
-        return articles.values();
+    public List<IArticle> getArticles() {
+        return articleList;
     }
 
     @Override
-    public IArticle getArticle(Integer articleNo) {
-        return articles.get(articleNo);
+    public Optional<IArticle> getArticle(Integer articleNo) {
+        return Optional.ofNullable(articles.get(articleNo));
     }
 
     @Override
@@ -72,5 +71,15 @@ public class Chapter
         return maxArticleNo;
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(heading);
+        builder.append(System.lineSeparator());
+        for (IArticle article : articleList) {
+            builder.append(article);
+            builder.append(System.lineSeparator());
+        }
+        return builder.toString();
+    }
 }

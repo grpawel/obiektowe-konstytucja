@@ -26,7 +26,10 @@ public class RomanNumeralConverter {
         Integer totalValue = 0;
         for (int i = romanNumber.length() - 1; i >= 0 ; i--) {
             Character currentChar = romanNumber.charAt(i);
-            Integer currentValue = romanDigits.getOrDefault(currentChar, 0);
+            Integer currentValue = romanDigits.get(Character.toUpperCase(currentChar));
+            if(currentValue == null) {
+                throw new NumberFormatException("Invalid character '" + currentChar + "' found when parsing roman numeral \"" + romanNumber + "\"");
+            }
             if(currentValue >= previousValue) {
                 totalValue += currentValue;
                 previousValue = currentValue;

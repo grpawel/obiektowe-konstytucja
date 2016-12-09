@@ -38,6 +38,7 @@ public class Main {
                 for(IArticle article : chapter.getArticles()) {
                     System.out.print("\t"+article.getArticleNo());
                 }
+                System.out.println();
             }
 
         } catch (IOException e) {

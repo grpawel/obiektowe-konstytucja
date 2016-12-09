@@ -47,7 +47,13 @@ public class ChapterSplitter
 
     private Integer extractChapterNumber(String chapterHeading) {
         RomanNumeralConverter romanConverter = new RomanNumeralConverter();
-        String romanNumber = chapterHeading.split(" ")[1];
+        String romanNumber;
+        try {
+            romanNumber = chapterHeading.split(" ")[1];
+        } catch(IndexOutOfBoundsException ex) {
+            romanNumber = "I";
+        }
+
         return romanConverter.convertToDecimal(romanNumber);
     }
 
@@ -57,7 +63,7 @@ public class ChapterSplitter
     }
 
     private List<String> splitIntoArticles(String contents) {
-        final String[] articles = contents.split("(?=Art\\. \\d\\.\\R)");
+        final String[] articles = contents.split("(?=Art\\. \\d+\\.\\R)");
         return Collections.unmodifiableList(Arrays.asList(articles));
     }
 

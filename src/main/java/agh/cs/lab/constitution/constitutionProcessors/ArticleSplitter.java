@@ -45,7 +45,9 @@ public class ArticleSplitter
 
     private Pair<String, String> extractFirstLine(String text) {
         String[] split = text.split("\\R", 2);
-        return new Pair<>(split[0], split[1]);
+        String restOfLines = split.length < 2 ? "" : split[1];
+        String firstLine = split.length < 1 ? "" : split[0];
+        return new Pair<>(firstLine, restOfLines);
     }
 
     private Integer extractArticleNumber(String article) {
@@ -54,6 +56,7 @@ public class ArticleSplitter
         if (matcher.find()) {
             return Integer.parseInt(matcher.group());
         }
+        System.out.println(articleText);
         return -1;
     }
 }

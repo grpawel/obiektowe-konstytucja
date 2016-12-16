@@ -24,12 +24,13 @@ public class Main {
     public static void main(String args[]) {
         try {
             if(args.length < 2) {
-                System.out.println("Please use correct arguments: path to file with constitution and requested articles.");
+                System.out.println("Please use correct arguments: path to file with constitution and requested articles or chapters.\n" +
+                        " eg. 1-3,5 6 10 - prints articles 1,2,3,5,10\n" +
+                        "     I III - prints chapters I and III.");
                 return;
             }
             String constitutionFilePath = args[0];
             String constitutionText = readFile(constitutionFilePath, StandardCharsets.UTF_8);
-
 
             List<ITextProcessor> textProcessors = new ArrayList<>();
             textProcessors.add(new EverythingBeforeFirstChapterRemover());
@@ -50,7 +51,7 @@ public class Main {
         }
     }
 
-    private String parseArguments(IConstitution constitution, String[] args) throws ObjectNotFoundException, IncorrectIntervalException {
+    public String parseArguments(IConstitution constitution, String[] args) throws ObjectNotFoundException, IncorrectIntervalException {
         String result = "";
 
         for (String arg : args) {

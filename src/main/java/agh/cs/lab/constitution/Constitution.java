@@ -63,4 +63,11 @@ public class Constitution
                 .map(Optional::get)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Integer> filterNotExistingArticleNumbers(List<Integer> articleNosToCheck) {
+        return articleNosToCheck.stream()
+                .filter(integer -> !getArticle(integer).isPresent())
+                .collect(Collectors.toList());
+    }
 }

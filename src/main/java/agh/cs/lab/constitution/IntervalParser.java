@@ -2,6 +2,7 @@ package agh.cs.lab.constitution;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Paweł Grochola on 09.12.2016.
@@ -9,9 +10,15 @@ import java.util.List;
 public class IntervalParser
         implements IIntervalParser {
     @Override
-    public List<Integer> parse(String numbers) {
-        String cleanNumbers = numbers.replaceAll("[^0-9,-]", "");
-        String[] independentTokens = cleanNumbers.split(",");
+    /**
+     * Doesn't work with negative numbers.
+     */
+    public List<Integer> parse(String numbers) throws IncorrectIntervalException {
+        String incorrectCharacters = numbers.replaceAll("[ 0-9,-]", "");
+        if(!incorrectCharacters.equals("")) {
+            throw new IncorrectIntervalException("Incorrect characters \"" + incorrectCharacters + "\" in expression \"" + numbers + "\".");
+        }
+        String[] independentTokens = numbers.split("[, ]");
         List<Integer> parsedNumbers = new ArrayList<>();
         for (String token : independentTokens) {
             try {
@@ -21,25 +28,28 @@ public class IntervalParser
                     parsedNumbers.add(Integer.parseUnsignedInt(token));
                 }
             } catch(NumberFormatException e) {
-                //pass;
+                //pass
             }
         }
         return parsedNumbers;
     }
 
-    private List<Integer> parseTokensWithRange(String token) {
+    private List<Integer> parseTokensWithRange(String token) throws IncorrectIntervalException {
         final String[] tokens = token.split("-");
         if(tokens.length > 2) {
-            throw new IllegalArgumentException("Too many numbers in expression \"" + token + "\"");
+            throw new IncorrectIntervalException("Too many numbers in expression \"" + token + "\"");
+        }
+        if(tokens.length <= 1 || tokens[0].equals("") || tokens[1].equals("")) {
+            throw new IncorrectIntervalException("Expression \"" + token + "\" should contain two numbers.");
         }
         final Integer firstNumber = Integer.parseInt(tokens[0]);
         final Integer secondNumber = Integer.parseInt(tokens[1]);
         if(firstNumber > secondNumber) {
-            throw new IllegalArgumentException("First number cannot be bigger than second in expression \"" + token + "\"");
+            throw new IncorrectIntervalException("First number cannot be bigger than second in expression \"" + token + "\"");
         }
         final List<Integer> parsedTokens = new ArrayList<>();
         Integer currentNumber = firstNumber;
-        while(!currentNumber.equals( secondNumber)) {
+        while(!currentNumber.equals(secondNumber)) {
             parsedTokens.add(currentNumber);
             currentNumber++;
         }

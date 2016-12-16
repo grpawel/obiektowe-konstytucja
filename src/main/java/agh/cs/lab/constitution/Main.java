@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,13 +43,16 @@ public class Main {
             IConstitution constitution = constitutionProcessor.processText(constitutionText);
 
             System.out.println(new Main().parseArguments(constitution, Arrays.copyOfRange(args, 1, args.length)));
-        } catch (IOException | ObjectNotFoundException e) {
+        } catch(NoSuchFileException e) {
+            System.out.println("File does not exist: " + e.getMessage());
+        } catch (IOException | ObjectNotFoundException | IncorrectIntervalException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private String parseArguments(IConstitution constitution, String[] args) throws ObjectNotFoundException {
+    private String parseArguments(IConstitution constitution, String[] args) throws ObjectNotFoundException, IncorrectIntervalException {
         String result = "";
+
         for (String arg : args) {
             boolean isChapter = true;
             Integer possibleRequestedChapter;
@@ -56,14 +60,19 @@ public class Main {
                 possibleRequestedChapter = new RomanNumeralConverter().convertToDecimal(arg);
 
                 Optional<IChapter> chapter = constitution.getChapter(possibleRequestedChapter);
-                if(chapter.isPresent()) {
-                    result += chapter.get();
-                }
+                result += chapter.orElseThrow(() -> new ObjectNotFoundException("Chapter " + arg + " not found."));
             } catch(NumberFormatException e) {
                 isChapter = false;
             }
             if(!isChapter) {
                 List<Integer> requestedArticleNumbers = new IntervalParser().parse(arg);
+                List<Integer> notExistingArticles = constitution.filterNotExistingArticleNumbers(requestedArticleNumbers);
+                if(!notExistingArticles.isEmpty()) {
+                    StringBuilder sb = new StringBuilder(notExistingArticles.size());
+                    notExistingArticles.forEach(integer -> sb.append(", ").append(integer));
+                    sb.replace(0,1,"");
+                    throw new ObjectNotFoundException("Article(s)" + sb + " not found.");
+                }
                 List<IArticle> requestedArticles = constitution.getArticles(requestedArticleNumbers);
                 for (IArticle article : requestedArticles) {
                     result += article;

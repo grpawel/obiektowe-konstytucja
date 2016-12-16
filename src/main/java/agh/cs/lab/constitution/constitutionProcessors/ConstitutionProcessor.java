@@ -20,7 +20,7 @@ public class ConstitutionProcessor
     }
 
     @Override
-    public void addTextProcessor(ITextProcessor textProcessor) {
+    public void addTextProcessor(ITextProcessor textProcessor){
         if(textProcessor.isApplicableForWholeText()) {
             processorsBeforeSplit.add(textProcessor);
         }
@@ -69,4 +69,5 @@ public class ConstitutionProcessor
         }
         return s;
     }
+
 }

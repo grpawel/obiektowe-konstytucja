@@ -11,5 +11,5 @@ public interface IIntervalParser {
      * @param numbers String with numbers and intervals.
      * @return List of individual numbers.
      */
-    List<Integer> parse(String numbers);
+    List<Integer> parse(String numbers) throws IncorrectIntervalException;
 }

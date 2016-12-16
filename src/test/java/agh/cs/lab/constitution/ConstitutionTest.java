@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +99,11 @@ public class ConstitutionTest {
     }
 
     @Test
+    public void getArticle_NegativeArticleNumber_ReturnsEmptyOptional() throws Exception {
+        assertFalse(constitution.getArticle(-1).isPresent());
+    }
+
+    @Test
     public void getArticle_TooBigArticleNumber_ReturnsEmptyOptional() throws Exception {
         assertFalse(constitution.getArticle(5).isPresent());
     }
@@ -134,6 +140,24 @@ public class ConstitutionTest {
         List<Integer> articleNumbers = Arrays.asList(4,2,3);
         List<IArticle> expectedArticles = Arrays.asList(article4, article2, article3);
         List<IArticle> actualArticles = constitution.getArticles(articleNumbers);
+
+        assertEquals(expectedArticles, actualArticles);
+    }
+
+    @Test
+    public void getArticles_NegativeArticleNumber_ReturnsEmptyList() throws Exception {
+        List<Integer> articleNumbers = Arrays.asList(-1, -10);
+        List<IArticle> expectedArticles = new ArrayList<>();
+        List<IArticle> actualArticles = constitution.getArticles(articleNumbers);
+
+        assertEquals(expectedArticles, actualArticles);
+    }
+
+    @Test
+    public void filterNotExistingArticleNumbers_NegativeArticleNumber_ReturnsListWithSuchNumber() throws Exception {
+        List<Integer> articleNumbers = Arrays.asList(-1, -10);
+        List<Integer> expectedArticles = Arrays.asList(-1,-10);
+        List<Integer> actualArticles = constitution.filterNotExistingArticleNumbers(articleNumbers);
 
         assertEquals(expectedArticles, actualArticles);
     }

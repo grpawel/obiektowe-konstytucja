@@ -34,7 +34,7 @@ public class ConstitutionSplitter
     }
 
     private List<String> splitIntoChapters(String constitution) {
-        String[] chapters = constitution.split("(?=Rozdział [IXLCDM]+\\R)");
+        String[] chapters = constitution.split("(?=Rozdział [IVXLCDM]+\\R)");
         return Arrays.asList(chapters);
     }
 }

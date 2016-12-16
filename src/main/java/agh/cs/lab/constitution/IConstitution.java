@@ -29,4 +29,6 @@ public interface IConstitution {
      * Returns list of articles with numbers in list. Ignores non-existent article numbers.
      */
     List<IArticle> getArticles(List<Integer> articleNos);
+
+    List<Integer> filterNotExistingArticleNumbers(List<Integer> articleNosToCheck);
 }
